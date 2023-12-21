@@ -1,0 +1,46 @@
+{
+  "cars": [
+    {
+      "id": 1,
+      "name": "BMW M3",
+      "price": 75000,
+      "image": "/img/bmw-m3.webp"
+    },
+    {
+      "id": 2,
+      "name": "BMW M5",
+      "price": 150000,
+      "image": "/img/bmw-m5.webp"
+    },
+    {
+      "id": 3,
+      "name": "MERCEDES CLS",
+      "price": 125000,
+      "image": "/img/mercedes-cls.webp"
+    },
+    {
+      "id": 4,
+      "name": "AUDI RS6",
+      "price": 175000,
+      "image": "/img/audi-rs6.webp"
+    },
+    {
+      "id": 5,
+      "name": "LAMBORGHINI HURACAN",
+      "price": 250000,
+      "image": "/img/lamborghini-huracan.webp"
+    },
+    {
+      "id": 6,
+      "name": "MCLAREN 750S",
+      "price": 300000,
+      "image": "/img/McLaren-750S.webp"
+    },
+    {
+      "id": 7,
+      "name": "Volvo 740",
+      "price": "100000",
+      "image": "https://avatars.mds.yandex.net/get-verba/1030388/2a000001609d297650018b3b25f9710a0de7/cattouch"
+    }
+  ]
+}
