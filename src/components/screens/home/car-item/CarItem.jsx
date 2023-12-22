@@ -2,11 +2,11 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { CarService } from '../../../../services/CarService.js'
 
-const CarItem = ({ car, delCar }) => {
+const CarItem = ({ car, delCar, paramsId }) => {
 	const deleteCar = async id => {
 		try {
-			return await CarService.deleteById(id)
 			delCar(id)
+			return await CarService.deleteById(id)
 		} catch (e) {
 			console.log(`Ошибка при удалении машины: ${e}`)
 		}
@@ -32,18 +32,24 @@ const CarItem = ({ car, delCar }) => {
 						</p>
 					</div>
 					<div className='flex gap-4'>
-						<Link
-							to={`/car/${car.id}`}
-							className='text-white bg-gray-800 hover:bg-gray-900 rounded-2xl text-sm p-4 my-2 flex flex-col justify-center items-center h-15'
-						>
-							Подробрее
-						</Link>
-						<button
-							className='text-white bg-red-700 hover:bg-red-800 rounded-2xl text-sm p-4 my-2 flex flex-col justify-center items-center h-15'
-							onClick={() => deleteCar(car.id)}
-						>
-							Удалить
-						</button>
+						{!paramsId ? (
+							<>
+								<Link
+									to={`/car/${car.id}`}
+									className='text-white bg-gray-800 hover:bg-gray-900 rounded-2xl text-sm p-4 my-2 flex flex-col justify-center items-center h-15'
+								>
+									Изменить
+								</Link>
+								<button
+									className='text-white bg-red-700 hover:bg-red-800 rounded-2xl text-sm p-4 my-2 flex flex-col justify-center items-center h-15'
+									onClick={() => deleteCar(car.id)}
+								>
+									Удалить
+								</button>
+							</>
+						) : (
+							<></>
+						)}
 					</div>
 				</div>
 			</div>

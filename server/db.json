@@ -34,13 +34,13 @@
       "id": 6,
       "name": "MCLAREN 750S",
       "price": 300000,
-      "image": "/img/McLaren-750S.webp"
+      "image": "/img/mclaren-750s.webp"
     },
     {
       "id": 7,
-      "name": "Volvo 740",
-      "price": "100000",
-      "image": "https://avatars.mds.yandex.net/get-verba/1030388/2a000001609d297650018b3b25f9710a0de7/cattouch"
+      "name": "VOLVO 740",
+      "price": "50000",
+      "image": "/img/volvo-740.webp"
     }
   ]
 }

@@ -18,7 +18,7 @@ const Home = () => {
 		const newData = cars.filter(car => car.id !== id)
 		setCars(newData)
 	}
-
+	
 	return (
 		<div className='flex flex-col justify-center items-center w-full font-bold py-10 px-5'>
 			<h1 className='text-6xl m-4 text-green-500 text-center'>Каталог машин</h1>

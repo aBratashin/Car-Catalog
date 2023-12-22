@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { CarService } from '../../../services/CarService.js'
 import CarItem from '../home/car-item/CarItem.jsx'
 import NotFound from '../not-found/NotFound.jsx'
+import CreateCarForm from '../home/create-car-form/CreateCarForm.jsx'
 
 const CarDetail = () => {
 	const { id } = useParams()
@@ -30,7 +31,8 @@ const CarDetail = () => {
 			>
 				Назад
 			</Link>
-			<CarItem car={car} />
+			<CreateCarForm car={car} setCar={setCar} />
+			<CarItem car={car} paramsId={id} />
 		</div>
 	)
 }

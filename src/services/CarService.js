@@ -16,5 +16,8 @@ export const CarService = {
 	},
 	async deleteById(id) {
 		return await axios.delete(`http://localhost:3001/cars/${id}`)
+	},
+	async changeCarById(data) {
+		return await axios.put(`http://localhost:3001/cars/${data.id}`, data)
 	}
 }
