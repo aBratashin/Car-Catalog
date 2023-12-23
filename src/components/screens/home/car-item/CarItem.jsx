@@ -32,7 +32,7 @@ const CarItem = ({ car, delCar, paramsId }) => {
 						</p>
 					</div>
 					<div className='flex gap-4'>
-						{!paramsId ? (
+						{!paramsId && (
 							<>
 								<Link
 									to={`/car/${car.id}`}
@@ -47,8 +47,6 @@ const CarItem = ({ car, delCar, paramsId }) => {
 									Удалить
 								</button>
 							</>
-						) : (
-							<></>
 						)}
 					</div>
 				</div>
