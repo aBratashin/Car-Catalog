@@ -1,15 +1,21 @@
-import React, { useState } from 'react'
+import React, { memo, useEffect } from 'react'
 import { CarService } from '../../../../services/CarService.js'
 import { useParams } from 'react-router-dom'
+import { useForm } from 'react-hook-form'
 
 const CreateCarForm = ({ setCars, car, setCar }) => {
-	const clearData = {
-		name: '',
-		price: '',
-		image: ''
-	}
+	const linkRegExp =
+		/^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/
 
-	const [data, setData] = useState(clearData)
+	const {
+		register,
+		handleSubmit,
+		reset,
+		setValue,
+		formState: { errors }
+	} = useForm({
+		mode: 'onChange'
+	})
 
 	const addCarToDataBase = async data => {
 		try {
@@ -23,12 +29,11 @@ const CreateCarForm = ({ setCars, car, setCar }) => {
 		}
 	}
 
-	const createCar = e => {
-		if (!data.name || !data.price || !data.image) return
-		e.preventDefault()
+	const createCar = data => {
+		console.log('create', data)
 		setCars(prev => [...prev, { id: prev[prev.length - 1].id + 1, ...data }])
-		setData(clearData)
 		addCarToDataBase(data).then(r => console.log(r))
+		reset()
 	}
 
 	const { id } = useParams()
@@ -41,9 +46,8 @@ const CreateCarForm = ({ setCars, car, setCar }) => {
 		}
 	}
 
-	const changeCar = e => {
-		if (!data.name || !data.price || !data.image) return
-		e.preventDefault()
+	const changeCar = data => {
+		console.log('change', data)
 		const newData = {
 			...car,
 			name: data.name,
@@ -51,68 +55,111 @@ const CreateCarForm = ({ setCars, car, setCar }) => {
 			image: data.image
 		}
 		setCar(newData)
-		setData(clearData)
 		changeCarInDataBase(newData).then(r => console.log(r))
+		reset()
 	}
 
+	car &&
+		useEffect(() => {
+			console.log('huy')
+			setValue('name', car?.name)
+			setValue('price', car?.price)
+			setValue('image', car?.image)
+		}, [car])
+
 	return (
-		<form className="w-1/2 bg-gray-800 p-4 m-8 rounded-2xl">
-			<div className="mb-5">
-				<label htmlFor="name" className="block mb-2 text-white">
+		<form
+			onSubmit={handleSubmit(id ? changeCar : createCar)}
+			className='w-1/2 bg-gray-800 p-4 m-8 rounded-2xl'
+		>
+			<div className='mb-5'>
+				<label htmlFor='name' className='block mb-2 text-white'>
 					Название
 				</label>
 				<input
-					type="text"
-					id="name"
-					required
-					placeholder="Введите название"
-					className="bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600"
-					value={data.name}
-					onChange={e => setData(prev => ({ ...prev, name: e.target.value }))}
+					{...register('name', {
+						required: {
+							value: true,
+							message: 'Поле обязательно для заполнения!'
+						},
+						minLength: {
+							value: 4,
+							message: 'Минимальная длина символов: 4!'
+						}
+					})}
+					type='text'
+					id='name'
+					placeholder='Введите название'
+					className='bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600'
 				/>
+				{errors?.name && (
+					<div className='p-1 text-center text-red-500'>
+						{errors?.name?.message}
+					</div>
+				)}
 			</div>
-			<div className="mb-5">
-				<label htmlFor="price" className="block mb-2 text-white">
+			<div className='mb-5'>
+				<label htmlFor='price' className='block mb-2 text-white'>
 					Цена
 				</label>
 				<input
-					type="number"
-					id="price"
-					required
-					placeholder="Введите цену"
-					className="bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600"
-					value={data.price}
-					onChange={e => setData(prev => ({ ...prev, price: e.target.value }))}
+					{...register('price', {
+						required: {
+							value: true,
+							message: 'Поле обязательно для заполнения!'
+						},
+						minLength: {
+							value: 3,
+							message: 'Минимальная длина символов: 3!'
+						}
+					})}
+					type='number'
+					id='price'
+					placeholder='Введите цену'
+					className='bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600'
 				/>
+				{errors?.price && (
+					<div className='p-1 text-center text-red-500'>
+						{errors?.price?.message}
+					</div>
+				)}
 			</div>
-			<div className="mb-5">
-				<label htmlFor="img" className="block mb-2 text-white">
+			<div className='mb-5'>
+				<label htmlFor='img' className='block mb-2 text-white'>
 					Картинка
 				</label>
 				<input
-					type="text"
-					id="img"
-					required
-					placeholder="Введите ссылку"
-					className="bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600"
-					value={data.image}
-					onChange={e => setData(prev => ({ ...prev, image: e.target.value }))}
+					{...register('image', {
+						required: {
+							value: true,
+							message: 'Поле обязательно для заполнения!'
+						},
+						minLength: {
+							value: 5,
+							message: 'Минимальная длина символов: 5!'
+						},
+						pattern: {
+							value: linkRegExp,
+							message: 'Введите корректную ссылку!'
+						}
+					})}
+					type='text'
+					id='img'
+					placeholder='Введите ссылку'
+					className='bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600'
 				/>
+				{errors?.image && (
+					<div className='p-1 text-center text-red-500'>
+						{errors?.image?.message}
+					</div>
+				)}
 			</div>
 			{id ? (
-				<button
-					type="img"
-					className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center"
-					onClick={changeCar}
-				>
+				<button className='text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center'>
 					Изменить
 				</button>
 			) : (
-				<button
-					type="img"
-					className="text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center"
-					onClick={createCar}
-				>
+				<button className='text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center'>
 					Добавить
 				</button>
 			)}
@@ -120,4 +167,4 @@ const CreateCarForm = ({ setCars, car, setCar }) => {
 	)
 }
 
-export default CreateCarForm
+export default memo(CreateCarForm)
