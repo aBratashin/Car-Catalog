@@ -1,12 +1,10 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { CarService } from '../../../../services/CarService.js'
 
-const CarItem = ({ car, delCar, paramsId }) => {
+const CarItem = ({ car, deleteMutation, paramsId }) => {
 	const deleteCar = async id => {
 		try {
-			delCar(id)
-			return await CarService.deleteById(id)
+			deleteMutation.mutate(id)
 		} catch (e) {
 			console.log(`Ошибка при удалении машины: ${e}`)
 		}

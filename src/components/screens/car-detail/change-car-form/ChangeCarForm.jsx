@@ -1,14 +1,12 @@
 import React, { memo, useEffect } from 'react'
-import { CarService } from '../../../../services/CarService.js'
-import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Form from '../../../ui/form/Form.jsx'
+import { useParams } from 'react-router-dom'
 
-const ChangeCarForm = ({ car, setCar }) => {
+const ChangeCarForm = ({ car, changeMutation }) => {
 	const {
 		register,
 		handleSubmit,
-		reset,
 		setValue,
 		formState: { errors }
 	} = useForm({
@@ -17,32 +15,25 @@ const ChangeCarForm = ({ car, setCar }) => {
 
 	const { id } = useParams()
 
-	const changeCarInDataBase = async data => {
+	useEffect(() => {
+		setValue('name', car?.name)
+		setValue('price', car?.price)
+		setValue('image', car?.image)
+	}, [car])
+
+	const changeCar = data => {
 		try {
-			return await CarService.changeCarById(data)
+			const newData = {
+				...car,
+				name: data.name,
+				price: data.price,
+				image: data.image
+			}
+			changeMutation.mutate(newData)
 		} catch (e) {
 			console.log(`Ошибка при изменении данных на сервере: ${e}`)
 		}
 	}
-
-	const changeCar = data => {
-		const newData = {
-			...car,
-			name: data.name,
-			price: data.price,
-			image: data.image
-		}
-		setCar(newData)
-		changeCarInDataBase(newData).then(r => console.log(r))
-		reset()
-	}
-
-	car &&
-		useEffect(() => {
-			setValue('name', car?.name)
-			setValue('price', car?.price)
-			setValue('image', car?.image)
-		}, [car])
 
 	return (
 		<Form

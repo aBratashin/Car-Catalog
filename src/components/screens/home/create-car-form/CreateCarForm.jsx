@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Form from '../../../ui/form/Form.jsx'
 
-const CreateCarForm = ({ setCars }) => {
+const CreateCarForm = ({ addMutation }) => {
 	const {
 		register,
 		handleSubmit,
@@ -16,22 +16,17 @@ const CreateCarForm = ({ setCars }) => {
 
 	const { id } = useParams()
 
-	const addCarToDataBase = async data => {
+	const createCar = async data => {
 		try {
 			const carsData = await CarService.getAll()
-			return await CarService.addCar({
+			addMutation.mutate({
 				id: carsData[carsData.length - 1].data + 1,
 				...data
 			})
+			reset()
 		} catch (e) {
 			console.log(`Ошибка при добавлении машины на сервер: ${e}`)
 		}
-	}
-
-	const createCar = data => {
-		setCars(prev => [...prev, { id: prev[prev.length - 1].id + 1, ...data }])
-		addCarToDataBase(data).then(r => console.log(r))
-		reset()
 	}
 
 	return (
