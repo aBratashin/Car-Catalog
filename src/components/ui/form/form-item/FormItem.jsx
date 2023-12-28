@@ -16,6 +16,7 @@ const FormItem = ({
 				{itemName}
 			</label>
 			<input
+				id={id}
 				{...reg(id, {
 					required: {
 						value: required,

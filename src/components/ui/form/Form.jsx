@@ -3,7 +3,7 @@ import FormItem from './form-item/FormItem.jsx'
 
 const Form = ({ handleSubmit, register, errors, id, changeCar, createCar }) => {
 	const linkRegExp =
-		/^((ftp|http|https):\/\/)?(www\.)?([A-Za-zА-Яа-я0-9]{1}[A-Za-zА-Яа-я0-9\-]*\.?)*\.{1}[A-Za-zА-Яа-я0-9-]{2,8}(\/([\w#!:.?+=&%@!\-\/])*)?/
+		/^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_\+.~#?&\/=]*)$/
 
 	return (
 		<form
@@ -47,15 +47,9 @@ const Form = ({ handleSubmit, register, errors, id, changeCar, createCar }) => {
 				className='bg-gray-700 border rounded-lg w-full p-2.5 border-gray-600'
 			/>
 
-			{id ? (
-				<button className='text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center'>
-					Изменить
-				</button>
-			) : (
-				<button className='text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center'>
-					Добавить
-				</button>
-			)}
+			<button className='text-white bg-blue-700 hover:bg-blue-800 rounded-lg w-full px-5 py-2.5 text-center'>
+				{id ? 'Изменить' : 'Добавить'}
+			</button>
 		</form>
 	)
 }
