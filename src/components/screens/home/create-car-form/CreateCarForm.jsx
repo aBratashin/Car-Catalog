@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
-import { CarService } from '../../../../services/CarService.js'
 import { useParams } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import Form from '../../../ui/form/Form.jsx'
 
-const CreateCarForm = ({ addMutation }) => {
+const CreateCarForm = ({ cars, addMutation }) => {
 	const {
 		register,
 		handleSubmit,
@@ -16,11 +15,10 @@ const CreateCarForm = ({ addMutation }) => {
 
 	const { id } = useParams()
 
-	const createCar = async data => {
+	const createCar = data => {
 		try {
-			const carsData = await CarService.getAll()
 			addMutation.mutate({
-				id: carsData[carsData.length - 1].data + 1,
+				id: cars[cars.length - 1].data + 1,
 				...data
 			})
 			reset()

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const NotFound = () => {
+const NotFound = ({ err }) => {
 	return (
 		<div className='grid h-screen place-items-center bg-white'>
 			<div className='text-center'>
 				<h1 className='mt-4 text-3xl font-bold tracking-tight text-gray-900'>
-					Страница не найдена
+					{err || 'Страница не найдена'}
 				</h1>
 				<div className='mt-10 flex items-center justify-center gap-x-6'>
 					<a

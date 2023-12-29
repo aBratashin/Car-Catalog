@@ -2,7 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const CarItem = ({ car, deleteMutation, paramsId }) => {
-	const deleteCar = async id => {
+	const deleteCar = id => {
 		try {
 			deleteMutation.mutate(id)
 		} catch (e) {

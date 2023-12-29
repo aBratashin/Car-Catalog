@@ -20,11 +20,7 @@ const CarDetail = () => {
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['car', id] })
 	})
 
-	if (!data) return <NotFound />
-
-	if (isError) return <div>{error.message}</div>
-
-	console.log(data)
+	if (isError) return <NotFound err={error.message} />
 
 	return (
 		<div className='flex flex-col justify-center items-center font-bold'>

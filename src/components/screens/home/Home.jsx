@@ -3,6 +3,7 @@ import CarItem from './car-item/CarItem.jsx'
 import CreateCarForm from './create-car-form/CreateCarForm.jsx'
 import { CarService } from '../../../services/CarService.js'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import NotFound from '../not-found/NotFound.jsx'
 
 const Home = () => {
 	const queryClient = useQueryClient()
@@ -22,12 +23,12 @@ const Home = () => {
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: ['cars'] })
 	})
 
-	if (isError) return <div>{error.message}</div>
+	if (isError) return <NotFound err={error.message} />
 
 	return (
 		<div className='flex flex-col justify-center items-center w-full font-bold py-10 px-5'>
 			<h1 className='text-6xl m-4 text-green-500 text-center'>Каталог машин</h1>
-			<CreateCarForm addMutation={addMutation} />
+			<CreateCarForm cars={data} addMutation={addMutation} />
 			{isError && (
 				<div className='flex flex-wrap justify-center items-center'>
 					<h1 className='text-4xl text-red-500'>{error.message}</h1>
