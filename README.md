@@ -1,8 +1,9 @@
-# React + Vite
+# Каталог машин
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+⭐ Главная страница
 
-Currently, two official plugins are available:
+![image](https://github.com/aBratashin/Car-Catalog/assets/114103713/c9f64098-b22a-4ea8-82e5-23c05c18c52a)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⭐ Страница редактирования
+
+![image](https://github.com/aBratashin/Car-Catalog/assets/114103713/23b1eae1-dffa-4e49-954f-f7c17015421c)
